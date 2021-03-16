@@ -1,0 +1,18 @@
+Package: STAT302package
+Title: A final project of STAT302
+Version: 0.0.0.9000
+Authors@R: 
+    person(given = "Lori",
+           family = "Wang",
+           role = c("aut", "cre"),
+           email = "zexinw@uw.edu")
+Description: Project 3 of STAT302. This packages contains 
+    t-test, linear regression, k-nearest neighbors cross-validation, and
+    random forest tree cross-validation as four functions to analyse the data
+    and costruct the model.
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.0
+Imports: stats, ggplot2, tidyverse, class, randomForest, dplyr, tibble
