@@ -9,10 +9,17 @@ The goal of STAT302package is to ...
 
 ## Installation
 
-You can install the released version of STAT302package from [CRAN](https://CRAN.R-project.org) with:
+You can install the STAT302package package using the following line:
+
 
 ``` r
-install.packages("STAT302package")
+devtools::install_github("loriWang999/STAT302package", build_vignette = TRUE, build_opts = c())
+library(STAT302package)
+# Use this to view the vignette in the Demo HTML help
+help(package = "STAT3022package", help_type = "html")
+# Use this to view the vignette as an isolated HTML file
+utils::browseVignettes(package = "STAT3022package")
+
 ```
 
 ## Example
