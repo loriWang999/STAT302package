@@ -16,8 +16,7 @@ A numeric with the cross-validation error.
 A function to perform cross-validation classification using random forest.
 }
 \examples{
-library(palmerpenguins)
-penguins <- na.omit(penguins)
+
 my_rf_cv(5)
 
 }

@@ -16,8 +16,8 @@
 #' @importFrom dplyr filter mutate
 #'
 #' @examples
-#' library(palmerpenguins)
-#' penguins <- na.omit(penguins)
+#'
+#' penguins <- na.omit(my_penguins)
 #' my_knn_cv(penguins[, 3:6], penguins$species, 1, 5)
 #'
 #' @export

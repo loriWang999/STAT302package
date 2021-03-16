@@ -9,13 +9,12 @@
 #'
 #' @import randomForest
 #' @examples
-#' library(palmerpenguins)
-#' penguins <- na.omit(penguins)
+#'
 #' my_rf_cv(5)
 #'
 #' @export
 my_rf_cv <- function(k) {
-  data_raw <- na.omit(penguins)
+  data_raw <- na.omit(my_penguins)
   n <- nrow(data_raw)
   folds <- sample(rep(1:k, length = n))
   data <- data.frame("x" = data_raw[,3:5], "y" = data_raw[6], "split" = folds)

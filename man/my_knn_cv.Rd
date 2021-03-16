@@ -23,8 +23,8 @@ for all observations, and \code{cv_err} the cross-validation misclassification e
 This function use k-nearest neighbbour cross-validatory classfication for trainig set.
 }
 \examples{
-library(palmerpenguins)
-penguins <- na.omit(penguins)
+
+penguins <- na.omit(my_penguins)
 my_knn_cv(penguins[, 3:6], penguins$species, 1, 5)
 
 }
