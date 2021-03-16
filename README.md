@@ -16,9 +16,9 @@ You can install the STAT302package package using the following line:
 devtools::install_github("loriWang999/STAT302package", build_vignette = TRUE, build_opts = c())
 library(STAT302package)
 # Use this to view the vignette in the Demo HTML help
-help(package = "STAT3022package", help_type = "html")
+help(package = "STAT302package", help_type = "html")
 # Use this to view the vignette as an isolated HTML file
-utils::browseVignettes(package = "STAT3022package")
+utils::browseVignettes(package = "STAT302package")
 
 ```
 
