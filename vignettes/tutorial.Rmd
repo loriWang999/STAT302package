@@ -1,6 +1,6 @@
 ---
 title: "Project 3: STAT302package Tutorial"
-author: Lori Wang & Andrew Lee
+author: "Lori Wang & Andrew Lee"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{STAT302package Tutorial}
@@ -15,6 +15,90 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r setup}
+```{r setup, warning=FALSE}
 library(STAT302package)
+library(ggplot2)
 ```
+
+## Part 1: R Package Development
+
+### Introduction:
+
+### 1. A tutorial for my_t.test
+  In this section, we would use $lifeExp$ data from $my\_gapminder$ to show all hypothesis conditions (two.side, less, greater) using my_t.test function.
+  
+$$H_0: \mu = 60$$
+$$H_a: \mu \neq 60$$
+
+$$\alpha = 0.05$$
+
+
+
+```{r}
+mu <- 60
+my_t.test(my_gapminder$lifeExp, "two.sided", mu)
+
+```
+This is a two-tail my_t.test with null hypothesis $\mu$ = 60, and alternative hypothesis that $H_a$ is not equal to 60. And $p\_value$ of this test equals to 0.093 which is greater than $\alpha$. Therefore, we fail to reject the null hypothesis. 
+
+$$H_0: \mu = 60$$
+$$H_a: \mu > 60$$
+$$\alpha = 0.05$$
+
+```{r}
+my_t.test(my_gapminder$lifeExp, "greater", mu)
+```
+This is an one-tail my_t.test with null hypothesis $\mu$ = 60, and alternative hypothesis that $H_a$ is bigger than 60. And $p\_value$ of this test equals to 0.95 which is greater than $\alpha$. Therefore, we fail to reject the null hypothesis. 
+
+$$H_0: \mu = 60$$
+
+$$H_a: \mu < 60$$
+$$\alpha = 0.05$$
+
+```{r}
+my_t.test(my_gapminder$lifeExp, "less", mu)
+```
+This is an one-tail my_t.test with null hypothesis $\mu$ = 60, and alternative hypothesis that $H_a$ is less than 60. And $p\_value$ of this test equals to 0.046 which is less than $\alpha$. Therefore, we have enough evident to reject the null hypothesis. 
+
+### 2. A tutorial for my_lm
+In this section, we would use also use $my\_gapminder$ data to show the linear regression model with the function my_lm. For this regression, $lifeExp$ is response variable and $gdpPercap$ and $continent$ as explanatory variables.
+
+```{r, warning=FALSE}
+my_lm_model <- my_lm(lifeExp ~ gdpPercap + continent, my_gapminder)
+my_lm_model
+co_lifeExp <- my_lm_model[2,1]
+co_lifeExp 
+```
+From the $coefficient$ of $gdpPercap$ above, we know that $lifeExp$ has a positive linear relationship with $gdpPercap$. Also, this value could tell us the expected difference in $lifeExp$ between two observations differing by one unit in $gdpPercap$, with all other covariates identical.
+
+
+Then we set a two.sided hypothesis test of $gdpPercap$ coefficient.
+$$H_0: gdpPercap\_co = 0$$
+
+$$H_a: gdpPercap\_co \neq 0$$
+$$\alpha = 0.05$$
+```{r, warning=FALSE}
+my_lm_p <- my_lm_model[2,4]
+my_lm_p < 0.05
+```
+
+We got the $p\_value$ is much smaller than 0.05. Therefore, we have enough evident to reject the null hypothesis. 
+
+```{r}
+# calculate y^hat
+my_co <- as.matrix(my_lm_model[,1])
+x <- model.matrix(lifeExp ~ gdpPercap + continent, my_gapminder)
+y_hat <- x %*% my_co
+my_df <- data.frame(actual = my_gapminder$lifeExp,
+                    fitted = y_hat, continent = my_gapminder$continent)
+ggplot(my_df, aes(x = fitted, y = actual, color = continent)) +
+  geom_point() +
+  geom_abline(slope = 1, intercept = 0, col = "black", lty = 2) + 
+  theme_bw(base_size = 10) +
+  labs(x = "Fitted values", y = "Actual values", title = "Actual vs. Fitted") +
+  theme(plot.title = element_text(hjust = 0.5, face = "bold", size = 14))
+```
+
+
+
+This graph interpret the Actual vs. Fitted plot. We could find that our fitted values are not completely follow the actual values. For example, for Europe and Oceania, the fitted values are follow the pattern of actual values. However, for other countries, our fitted values are bad with actual values, especially for Africa. 
