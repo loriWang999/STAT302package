@@ -31,3 +31,5 @@ library(STAT302package)
 ## basic example code
 ```
 
+[![codecov](https://codecov.io/gh/loriWang999/STAT302package/branch/master/graph/badge.svg?token=ZZCPBUYMXO)](https://codecov.io/gh/loriWang999/STAT302package)
+
