@@ -3,6 +3,7 @@
 
 <!-- badges: start -->
 [![R build status](https://github.com/loriWang999/STAT302package/workflows/R-CMD-check/badge.svg)](https://github.com/loriWang999/STAT302package/actions)
+[![codecov](https://codecov.io/gh/loriWang999/STAT302package/branch/master/graph/badge.svg?token=ZZCPBUYMXO)](https://codecov.io/gh/loriWang999/STAT302package)
 <!-- badges: end -->
 
 The goal of STAT302package is to ...
@@ -30,6 +31,4 @@ This is a basic example which shows you how to solve a common problem:
 library(STAT302package)
 ## basic example code
 ```
-
-[![codecov](https://codecov.io/gh/loriWang999/STAT302package/branch/master/graph/badge.svg?token=ZZCPBUYMXO)](https://codecov.io/gh/loriWang999/STAT302package)
 
