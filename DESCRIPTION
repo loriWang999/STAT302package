@@ -22,8 +22,8 @@ Imports: stats,
          randomForest, 
          dplyr, 
          tibble,
-         gapminder,
-         palmerpenguins
+         palmerpenguins,
+         gapminder
 Suggests: 
     testthat,
     knitr,
