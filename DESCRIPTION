@@ -24,7 +24,8 @@ Imports: stats,
          tibble,
          palmerpenguins,
          gapminder,
-         kableExtra
+         kableExtra,
+         magrittr
 Suggests: 
     testthat,
     knitr,

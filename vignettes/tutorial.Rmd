@@ -88,7 +88,7 @@ my_lm_p <- my_lm_model[2,4]
 my_lm_p < 0.05
 ```
 
-We got the $p\_value$ is much smaller than 0.05. Therefore, we have enough evident to reject the null hypothesis. 
+We found that the $p\_value$ is much smaller than 0.05. Therefore, we have enough evident to reject the null hypothesis. 
 
 ```{r}
 # calculate y^hat
