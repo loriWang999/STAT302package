@@ -71,7 +71,7 @@ In this section, we would use also use $my\_gapminder$ data to show the linear r
 
 ```{r, warning=FALSE}
 my_lm_model <- my_lm(lifeExp ~ gdpPercap + continent, my_gapminder)
-my_lm_model
+kable_styling(kable(my_lm_model))
 co_lifeExp <- my_lm_model[2,1]
 co_lifeExp 
 ```
