@@ -17,13 +17,19 @@ knitr::opts_chunk$set(
 
 ```{r setup, warning=FALSE}
 library(STAT302package)
+library(magrittr)
+library(dplyr)
+library(kableExtra)
 library(ggplot2)
 ```
 
 ## Part 1: R Package Development
 
 ### Introduction:
-
+This package features many statistical functions developed by me for the STAT 302 class at the University of Washington. It can be installed via the following code:
+```{r, eval = FALSE}
+devtools::install_github("loriWang999/STAT302package", build_vignette = TRUE, build_opts = c())
+```
 ### 1. A tutorial for my_t.test
   In this section, we would use $lifeExp$ data from $my\_gapminder$ to show all hypothesis conditions (two.side, less, greater) using my_t.test function.
   
@@ -102,3 +108,99 @@ ggplot(my_df, aes(x = fitted, y = actual, color = continent)) +
 
 
 This graph interpret the Actual vs. Fitted plot. We could find that our fitted values are not completely follow the actual values. For example, for Europe and Oceania, the fitted values are follow the pattern of actual values. However, for other countries, our fitted values are bad with actual values, especially for Africa. 
+
+### 4. my_knn_cv Demonstration
+This function performs a k-nearest neighbors non-parametric prediction algorithm. It splits a provided dataset into training and testing segments based on
+the number of "neighbors," or the distance from the training data, desired. It will predict new cases provided in the testing data given the training data.
+We want to predict \code{species} using covariates \code{bill_length_mm}, \code{bill_depth_mm}, \code{flipper_length_mm}, \code{body_mass_g} with \code{k_cv = 5}.
+Inputs:
+- \code{train}: input data frame
+- \code{cl}: true class value of the training data
+- \code{k_nn}: integer representing the number of neighbors
+- \code{k_cv}: integer representing the number of folds
+
+```{r}
+
+# import my_penguins data
+data(my_penguins)
+
+# delete rows with NA data
+penguins <- na.omit(my_penguins)
+
+# create x and y matrices
+train <- penguins[3:6]
+cl <- penguins %>% pull(species)
+
+# Initiate empty lists to store training and CV misclassfication rates
+training_error = rep(NA, length(10))
+cv_error = rep(NA, length(10))
+
+# Iterate different fits from k_nn of 1 to 10
+for (n in 1:10){
+  results <- my_knn_cv(train, cl, n, 5)
+  training_error[n] <- sum(penguins$species != results[[1]]) / nrow(penguins)
+  cv_error[n] <- results[[2]]
+}
+
+# Organize the errors into a table
+err_data <- data.frame("k_nn" = c(1:10),
+                       "cv_error" = cv_error,
+                       "training_error" = training_error)
+
+kable_styling(kable(err_data))
+```
+
+
+Based on both the training and CV misclassification rates, a fold of 1 would be ideal since it has the minimum value for both. In practice, it is always the best to use the model with the least CV error, so a k_nn of 1 would also be chosen for practice.
+
+### 5. my_rf_cv Demonstration
+Instead of classifying based on neighboring data points in the training data,
+the random forest algorithm classify based on splits in the parameters.
+We want to predict \code{body_mass_g} using covariates \code{bill_length_mm}, \code{bill_depth_mm}, \code{flipper_length_mm}.
+Inputs:
+- \code{k}: number of folds
+```{r}
+# remove NA data in the data set
+penguins <- na.omit(penguins)
+
+# create a list to label the number of folds
+folds <- c(rep("2", 30), rep("5", 30), rep("10", 30))
+
+# create empty lists to store MSE
+MSE_2 <- rep(NA, length(30))
+MSE_5 <- rep(NA, length(30))
+MSE_10 <- rep(NA, length(30))
+
+# fill MSE data
+for (k in 1:30){
+  MSE_2[k] <- my_rf_cv(2)
+  MSE_5[k] <- my_rf_cv(5)
+  MSE_10[k] <- my_rf_cv(10)
+}
+
+# combine the label and data into one data frame
+MSE_data <- data.frame(names = folds,
+                       MSE = c(MSE_2, MSE_5, MSE_10))
+```
+```{r}
+# plot the data
+ggplot(data = MSE_data,
+       aes(x = names, MSE)) +
+  geom_boxplot(fill = "lightblue") +
+  theme_bw(base_size = 20) +
+  labs(title = "MSE According to Number of Folds",
+       x = "Number of Folds",
+       y = "MSE") +
+  theme(plot.title =
+          element_text(hjust = 0.5),
+        text = element_text(size = 12))  
+```
+```{r}
+MSE_table <- data.frame("folds" = c(2, 5, 10),
+                        "mean" = c(mean(MSE_2), mean(MSE_5), mean(MSE_10)),
+                        "std_deviation" = c(sd(MSE_2), sd(MSE_5), sd(MSE_10)))
+kable_styling(kable(MSE_table))
+```
+In general, a fold of 2 has the widest standard deviation, while a fold of 10 gives the lowest mean MSE. THis could be the case because having 10 folds allows for the algorithm to best predict the body weight of the penguins in the dataset.
+
+
