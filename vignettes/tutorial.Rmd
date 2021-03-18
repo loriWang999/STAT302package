@@ -90,7 +90,7 @@ my_lm_p < 0.05
 
 We found that the $p\_value$ is much smaller than 0.05. Therefore, we have enough evident to reject the null hypothesis. 
 
-```{r}
+``````{r, fig.width=8,fig.height=8}
 # calculate y^hat
 my_co <- as.matrix(my_lm_model[,1])
 x <- model.matrix(lifeExp ~ gdpPercap + continent, my_gapminder)
@@ -182,7 +182,7 @@ for (k in 1:30){
 MSE_data <- data.frame(names = folds,
                        MSE = c(MSE_2, MSE_5, MSE_10))
 ```
-```{r}
+```{r, fig.width=8,fig.height=8}
 # plot the data
 ggplot(data = MSE_data,
        aes(x = names, MSE)) +
