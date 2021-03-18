@@ -23,7 +23,8 @@ Imports: stats,
          dplyr, 
          tibble,
          palmerpenguins,
-         gapminder
+         gapminder,
+         kableExtra
 Suggests: 
     testthat,
     knitr,
