@@ -1,5 +1,5 @@
-library(palmerpenguins)
-penguins <- na.omit(penguins)
+
+penguins <- na.omit(my_penguins)
 
 test_that("my_rf_cv output", {
   my_train_value <- my_rf_cv(5)
